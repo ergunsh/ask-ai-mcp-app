@@ -75,9 +75,7 @@ export function SubmitTab({ questions, answers, onSubmit }: SubmitTabProps) {
                   ? 'bg-red-50 border-red-200 dark:bg-red-900/10 dark:border-red-800/30'
                   : 'bg-surface-elevated border-border-subtle'
                 }
-                animate-fade-in
               `}
-              style={{ animationDelay: `${index * 50}ms` }}
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">

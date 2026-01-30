@@ -54,7 +54,8 @@ ask-user-mcp-app/
 │   │   └── index.ts             # Barrel export
 │   ├── hooks/             # Custom React hooks
 │   │   ├── useTabNavigation.ts    # Tab/Shift+Tab & arrow key tab navigation; Tab works even when focused on input
-│   │   └── useOptionNavigation.ts # Arrow key option navigation, Enter/Space select
+│   │   ├── useOptionNavigation.ts # Arrow key option navigation, Enter/Space select
+│   │   └── useWindowFocus.ts      # Tracks window focus state for conditional focus outlines
 │   ├── types/index.ts     # TypeScript interfaces (QuestionConfig, MultiQuestionState)
 │   └── styles/app.css     # Tailwind directives + CSS variables
 ├── tsconfig.json          # Browser TypeScript (for Vite/React)
@@ -210,6 +211,10 @@ const { focusedIndex } = useOptionNavigation({
   onOtherToggle: handleOtherToggle,
   enabled: viewState === 'selecting' && !isOnSubmitTab,
 });
+
+// Window focus tracking - focus outlines only show when window is focused
+const isWindowFocused = useWindowFocus();
+const effectiveFocusedIndex = isWindowFocused ? focusedIndex : undefined;
 ```
 
 ### 4. `vite.config.ts` - Build Configuration

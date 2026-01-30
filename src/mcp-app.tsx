@@ -4,6 +4,7 @@ import { useApp } from '@modelcontextprotocol/ext-apps/react';
 import { TabBar, SubmitTab, QuestionPanel } from './components';
 import { useTabNavigation } from './hooks/useTabNavigation';
 import { useOptionNavigation } from './hooks/useOptionNavigation';
+import { useWindowFocus } from './hooks/useWindowFocus';
 import type { QuestionConfig, SelectionState, MultiQuestionState } from './types';
 import './styles/app.css';
 
@@ -317,6 +318,10 @@ function AskUserApp() {
     enabled: viewState === 'selecting' && !isOnSubmitTab && !!activeQuestion,
   });
 
+  // Track window focus - only show focus outlines when window is actually focused
+  const isWindowFocused = useWindowFocus();
+  const effectiveFocusedIndex = isWindowFocused ? focusedIndex : undefined;
+
   // Error state
   if (error) {
     return (
@@ -397,7 +402,7 @@ function AskUserApp() {
           onOtherToggle={handleOtherToggle}
           onOtherChange={handleOtherChange}
           onNext={handleNext}
-          focusedIndex={focusedIndex}
+          focusedIndex={effectiveFocusedIndex}
           nextIndex={nextIndex}
           isLastQuestion={questions.indexOf(activeQuestion) === questions.length - 1}
         />
