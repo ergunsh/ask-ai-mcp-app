@@ -71,9 +71,20 @@ If published to npm, add to your `claude_desktop_config.json`:
 }
 ```
 
-### Web Clients (Claude.ai, ChatGPT, etc.)
+### Claude.ai (Hosted)
 
-Start the HTTP server:
+Use the hosted MCP server directly with Claude's connector feature:
+
+1. Open [Claude.ai](https://claude.ai) and go to **Settings** → **Connectors**
+2. Click **Add custom connector** and enter:
+   - **Remote MCP server URL**: `https://ask-user-mcp-app.vercel.app/mcp`
+3. Save and start a new conversation
+
+The `ask_user` tool will now be available to Claude.
+
+### Web Clients (Self-Hosted)
+
+Run your own instance:
 
 ```bash
 npm start
