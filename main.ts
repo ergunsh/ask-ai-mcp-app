@@ -5,17 +5,15 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import cors from 'cors';
-import type { Request, Response } from 'express';
+import type { Express, Request, Response } from 'express';
 import { createServer } from './server.js';
 
 const PORT = parseInt(process.env.PORT ?? '3001', 10);
 
 /**
- * Starts an MCP server with Streamable HTTP transport in stateless mode.
+ * Creates the Express app with MCP endpoints (without starting the server).
  */
-async function startStreamableHTTPServer(
-  createServerFn: () => McpServer,
-): Promise<void> {
+function createExpressApp(createServerFn: () => McpServer): Express {
   const app = createMcpExpressApp({ host: '0.0.0.0' });
   app.use(cors());
 
@@ -50,6 +48,17 @@ async function startStreamableHTTPServer(
     res.json({ status: 'ok' });
   });
 
+  return app;
+}
+
+/**
+ * Starts an MCP server with Streamable HTTP transport in stateless mode.
+ */
+async function startStreamableHTTPServer(
+  createServerFn: () => McpServer,
+): Promise<void> {
+  const app = createExpressApp(createServerFn);
+
   const httpServer = app.listen(PORT, () => {
     console.log(`MCP server listening on http://localhost:${PORT}/mcp`);
   });
@@ -72,6 +81,10 @@ async function startStdioServer(
   await createServerFn().connect(new StdioServerTransport());
 }
 
+// Export Express app for Vercel serverless
+export const app = createExpressApp(createServer);
+export default app;
+
 async function main() {
   if (process.argv.includes('--stdio')) {
     await startStdioServer(createServer);
@@ -80,7 +93,11 @@ async function main() {
   }
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+// Only start server if running directly (not imported by Vercel)
+const isVercel = process.env.VERCEL === '1';
+if (!isVercel) {
+  main().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}

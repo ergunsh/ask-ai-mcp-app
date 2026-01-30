@@ -5,10 +5,8 @@ import { z } from 'zod';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-// Works both from source (server.ts) and compiled (dist/server.js)
-const DIST_DIR = import.meta.filename.endsWith('.ts')
-  ? path.join(import.meta.dirname, 'dist')
-  : import.meta.dirname;
+// Use process.cwd() for reliable path resolution on both local dev and Vercel
+const DIST_DIR = path.join(process.cwd(), 'dist');
 
 // Schema for a single question
 const QuestionSchema = z.object({
