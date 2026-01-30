@@ -43,14 +43,14 @@ ask-user-mcp-app/
 ├── src/
 │   ├── mcp-app.tsx        # Main React component - multi-question state management
 │   ├── components/        # UI components (all use TailwindCSS)
-│   │   ├── TabBar.tsx           # Tab navigation with checkboxes + Submit tab
-│   │   ├── QuestionPanel.tsx    # Renders single question content
-│   │   ├── SubmitTab.tsx        # Review page with answer summary
-│   │   ├── QuestionHeader.tsx   # Header tag + question text
-│   │   ├── OptionButton.tsx     # Individual option with radio/checkbox + focus state
+│   │   ├── TabBar.tsx           # Pill-style tab navigation with progress indicator
+│   │   ├── QuestionPanel.tsx    # Renders single question with refined card styling
+│   │   ├── SubmitTab.tsx        # Review page with staggered animations
+│   │   ├── QuestionHeader.tsx   # Question text with optional subtitle
+│   │   ├── OptionButton.tsx     # Elegant option cards with hover/selection states
 │   │   ├── OptionList.tsx       # List of OptionButtons with focusedIndex
 │   │   ├── OtherInput.tsx       # "Other" option with text input; imperatively focuses on toggle, blurs on Tab/Escape
-│   │   ├── SubmitButton.tsx     # Submit button
+│   │   ├── SubmitButton.tsx     # Primary action button with accent color
 │   │   └── index.ts             # Barrel export
 │   ├── hooks/             # Custom React hooks
 │   │   ├── useTabNavigation.ts    # Tab/Shift+Tab & arrow key tab navigation; Tab works even when focused on input
@@ -243,6 +243,29 @@ const { focusedIndex } = useOptionNavigation({
 - CSS variables in `src/styles/app.css` control light/dark themes
 - Host theme applied via `data-theme` attribute on `<html>`
 
+**Design System Colors (Claude-native palette):**
+
+| Variable | Light | Dark | Purpose |
+|----------|-------|------|---------|
+| `--mcp-surface` | `#ffffff` | `#1c1a17` | Base background |
+| `--mcp-surface-elevated` | `#faf8f5` | `#252320` | Elevated surfaces |
+| `--mcp-surface-warm` | `#f5f1eb` | `#2a2724` | Hover backgrounds |
+| `--mcp-accent` | `#c4704b` | `#d4896b` | Primary accent (terra cotta) |
+| `--mcp-text-primary` | `#1a1815` | `#f5f2ed` | Main text |
+| `--mcp-text-secondary` | `#6b635a` | `#a8a099` | Secondary text |
+| `--mcp-text-muted` | `#9c948a` | `#6b655e` | Muted text |
+| `--mcp-border` | `#e8e4de` | `#3a3632` | Default borders |
+| `--mcp-selected-bg` | `#faf6f2` | `#2e2925` | Selected state background |
+| `--mcp-success` | `#5a8a5a` | `#7aaa7a` | Success indicators |
+
+**Tailwind Utility Classes:**
+- Surfaces: `bg-surface`, `bg-surface-elevated`, `bg-surface-warm`
+- Text: `text-text-primary`, `text-text-secondary`, `text-text-muted`
+- Accent: `bg-accent`, `text-accent`, `hover:bg-accent-hover`
+- Borders: `border-border`, `border-border-subtle`, `border-selected-border`
+- Shadows: `shadow-sm`, `shadow-md`, `shadow-focus`
+- Animation: `animate-fade-in` with delay utilities (`animate-delay-1` to `animate-delay-4`)
+
 ### Adding a New Component
 
 1. Create component in `src/components/`
@@ -275,16 +298,19 @@ To modify this behavior:
 
 ```
 mcp-app.tsx
-├── TabBar                    # Tab navigation
-│   └── Tab buttons (questions + submit)
+├── TabBar                    # Pill tabs with progress bar
+│   ├── Progress indicator (animated bar + count)
+│   └── Pill buttons (questions + submit)
 ├── SubmitTab (when activeTab === 'submit')
-│   └── SubmitButton
+│   ├── Review header
+│   ├── Answer cards (with staggered animations)
+│   └── SubmitButton (accent-colored CTA)
 └── QuestionPanel (when activeTab is a question)
-    ├── QuestionHeader
+    ├── QuestionHeader (question + optional subtitle)
     ├── OptionList
-    │   └── OptionButton (for each option)
+    │   └── OptionButton (elegant cards with selection state)
     ├── OtherInput (if allowOther)
-    └── Next/Review button    # Advances to next tab
+    └── Continue button       # Advances to next tab
 ```
 
 ### Testing Changes

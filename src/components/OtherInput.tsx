@@ -26,51 +26,58 @@ export function OtherInput({ isSelected, value, multiSelect, onToggle, onChange,
     }
     // All other keys (including arrow keys) pass through normally for text editing
   };
+
   return (
-    <div className="mt-2">
+    <div className="mt-1.5">
       <button
         type="button"
         onClick={onToggle}
         className={`
-          w-full p-3 text-left rounded-lg border-2 transition-all duration-150
-          hover:border-primary/50 hover:bg-surface-secondary
-          focus:outline-none focus:ring-2 focus:ring-primary/30
+          group w-full px-4 py-3 text-left rounded-xl
+          transition-all duration-150 ease-out
           ${isSelected
-            ? 'border-primary bg-primary/5'
-            : 'border-border bg-surface'
+            ? 'bg-selected-bg border border-selected-border shadow-sm'
+            : 'bg-surface hover:bg-surface-elevated border border-transparent hover:border-border'
           }
-          ${focused ? 'ring-2 ring-primary/50' : ''}
+          ${focused ? 'ring-2 ring-accent/30 ring-offset-1 ring-offset-surface' : ''}
         `}
       >
         <div className="flex items-center gap-3">
           {/* Selection indicator */}
           <div className={`
-            flex-shrink-0 w-5 h-5
-            border-2 flex items-center justify-center transition-colors
-            ${multiSelect ? 'rounded-sm' : 'rounded-full'}
+            flex-shrink-0 w-[18px] h-[18px]
+            flex items-center justify-center
+            transition-all duration-150 ease-out
+            ${multiSelect ? 'rounded-[5px]' : 'rounded-full'}
             ${isSelected
-              ? 'border-primary bg-primary'
-              : 'border-text-secondary'
+              ? 'bg-accent border-0'
+              : 'border-[1.5px] border-text-muted/40 group-hover:border-text-secondary'
             }
           `}>
             {isSelected && (
               multiSelect ? (
-                <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
               ) : (
-                <div className="w-2 h-2 bg-white rounded-full" />
+                <div className="w-[6px] h-[6px] bg-white rounded-full" />
               )
             )}
           </div>
 
-          <span className="font-medium text-text-primary">Other</span>
+          <span className={`
+            text-base font-medium
+            transition-colors duration-150
+            ${isSelected ? 'text-text-primary' : 'text-text-primary/90 group-hover:text-text-primary'}
+          `}>
+            Other
+          </span>
         </div>
       </button>
 
       {/* Text input shown when "Other" is selected */}
       {isSelected && (
-        <div className="mt-2 ml-8">
+        <div className="mt-2 ml-[42px] animate-fade-in">
           <input
             ref={(el) => {
               inputRef.current = el;
@@ -83,12 +90,13 @@ export function OtherInput({ isSelected, value, multiSelect, onToggle, onChange,
             value={value}
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Enter your answer..."
+            placeholder="Type your answer..."
             className="
-              w-full px-3 py-2 rounded-lg border-2 border-border
-              bg-surface text-text-primary placeholder-text-secondary
-              focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30
-              transition-colors
+              w-full px-3 py-2 text-base rounded-lg
+              bg-surface-elevated border border-border
+              text-text-primary placeholder-text-muted
+              focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20
+              transition-all duration-150
             "
           />
         </div>

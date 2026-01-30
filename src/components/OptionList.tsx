@@ -11,7 +11,7 @@ interface OptionListProps {
 
 export function OptionList({ options, selected, multiSelect, onSelect, focusedIndex }: OptionListProps) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-1.5">
       {options.map((option, index) => (
         <OptionButton
           key={option.value}

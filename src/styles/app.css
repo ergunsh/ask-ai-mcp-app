@@ -2,34 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CSS custom properties for host theme integration */
+/* Claude-native color palette for seamless integration */
 :root {
-  --mcp-primary: #3b82f6;
-  --mcp-primary-hover: #2563eb;
+  /* Warm cream backgrounds matching Claude's aesthetic */
   --mcp-surface: #ffffff;
-  --mcp-surface-secondary: #f3f4f6;
-  --mcp-text-primary: #111827;
-  --mcp-text-secondary: #6b7280;
-  --mcp-border: #e5e7eb;
-  --mcp-border-focus: #3b82f6;
+  --mcp-surface-elevated: #faf8f5;
+  --mcp-surface-warm: #f5f1eb;
+
+  /* Text hierarchy with warm undertones */
+  --mcp-text-primary: #1a1815;
+  --mcp-text-secondary: #6b635a;
+  --mcp-text-muted: #9c948a;
+
+  /* Warm accent colors inspired by Claude's palette */
+  --mcp-accent: #c4704b;
+  --mcp-accent-hover: #b5613c;
+  --mcp-accent-subtle: rgba(196, 112, 75, 0.12);
+  --mcp-accent-muted: rgba(196, 112, 75, 0.08);
+
+  /* Borders - subtle warm grays */
+  --mcp-border: #e8e4de;
+  --mcp-border-subtle: #f0ece6;
+  --mcp-border-focus: #c4704b;
+
+  /* Selection states */
+  --mcp-selected-bg: #faf6f2;
+  --mcp-selected-border: #d4a88a;
+
+  /* Success states */
+  --mcp-success: #5a8a5a;
+  --mcp-success-bg: rgba(90, 138, 90, 0.1);
+
+  /* Shadows - warm and subtle */
+  --mcp-shadow-sm: 0 1px 2px rgba(26, 24, 21, 0.04);
+  --mcp-shadow-md: 0 2px 8px rgba(26, 24, 21, 0.06);
+  --mcp-shadow-focus: 0 0 0 3px rgba(196, 112, 75, 0.15);
 }
 
 [data-theme="dark"] {
-  --mcp-primary: #60a5fa;
-  --mcp-primary-hover: #93c5fd;
-  --mcp-surface: #1f2937;
-  --mcp-surface-secondary: #374151;
-  --mcp-text-primary: #f9fafb;
-  --mcp-text-secondary: #9ca3af;
-  --mcp-border: #4b5563;
-  --mcp-border-focus: #60a5fa;
+  /* Dark mode with warm undertones */
+  --mcp-surface: #1c1a17;
+  --mcp-surface-elevated: #252320;
+  --mcp-surface-warm: #2a2724;
+
+  --mcp-text-primary: #f5f2ed;
+  --mcp-text-secondary: #a8a099;
+  --mcp-text-muted: #6b655e;
+
+  --mcp-accent: #d4896b;
+  --mcp-accent-hover: #e09a7c;
+  --mcp-accent-subtle: rgba(212, 137, 107, 0.15);
+  --mcp-accent-muted: rgba(212, 137, 107, 0.08);
+
+  --mcp-border: #3a3632;
+  --mcp-border-subtle: #2e2b28;
+  --mcp-border-focus: #d4896b;
+
+  --mcp-selected-bg: #2e2925;
+  --mcp-selected-border: #8a6a52;
+
+  --mcp-success: #7aaa7a;
+  --mcp-success-bg: rgba(122, 170, 122, 0.12);
+
+  --mcp-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --mcp-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --mcp-shadow-focus: 0 0 0 3px rgba(212, 137, 107, 0.2);
 }
 
 /* Reset for MCP App iframe */
 body {
-  @apply m-0 p-0 font-sans;
+  margin: 0;
+  padding: 0;
+  font-family: 'Söhne', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--mcp-surface);
   color: var(--mcp-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Let content determine height for auto-resize to work */
@@ -37,3 +85,61 @@ html, body, #root {
   height: auto;
   min-height: auto;
 }
+
+/* Smooth transitions for theme changes */
+* {
+  transition-property: background-color, border-color, color;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--mcp-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mcp-text-muted);
+}
+
+/* Focus visible only for keyboard navigation */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--mcp-shadow-focus);
+}
+
+/* Subtle entrance animation */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeSlideIn 0.2s ease-out forwards;
+}
+
+/* Staggered animation delays */
+.animate-delay-1 { animation-delay: 50ms; }
+.animate-delay-2 { animation-delay: 100ms; }
+.animate-delay-3 { animation-delay: 150ms; }
+.animate-delay-4 { animation-delay: 200ms; }

@@ -320,8 +320,8 @@ function AskUserApp() {
   // Error state
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-[100px] p-4">
-        <div className="text-red-500">Error: {error.message}</div>
+      <div className="flex items-center justify-center min-h-[80px] p-4">
+        <div className="text-red-500 text-sm">Connection error. Please try again.</div>
       </div>
     );
   }
@@ -329,8 +329,14 @@ function AskUserApp() {
   // Loading state
   if (!isConnected || questions.length === 0) {
     return (
-      <div className="flex items-center justify-center min-h-[100px] p-4">
-        <div className="text-text-secondary">Loading...</div>
+      <div className="flex items-center justify-center min-h-[80px] p-4">
+        <div className="flex items-center gap-2 text-text-muted text-sm">
+          <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+          </svg>
+          Loading...
+        </div>
       </div>
     );
   }
@@ -338,25 +344,30 @@ function AskUserApp() {
   // Compact "ready" state - shows selected answer with option to edit
   if (viewState === 'ready') {
     return (
-      <div className="p-3">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2 min-w-0">
-            <svg className="w-4 h-4 flex-shrink-0 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+      <div className="p-4">
+        <div className="flex items-start gap-3 p-3 rounded-xl bg-success-bg border border-success/20">
+          <div className="flex-shrink-0 mt-0.5">
+            <svg className="w-5 h-5 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span className="text-sm text-text-secondary truncate">
-              {buildResponse().replace(/\n/g, ' | ')}
-            </span>
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-sm font-medium text-text-primary mb-1">Answers ready to send</div>
+            <div className="text-sm text-text-secondary leading-relaxed">
+              {buildResponse().split('\n').map((line, i) => (
+                <div key={i} className="truncate">{line}</div>
+              ))}
+            </div>
           </div>
           <button
             onClick={handleEdit}
-            className="flex-shrink-0 px-3 py-1 text-sm font-medium text-primary hover:text-primary-hover transition-colors"
+            className="flex-shrink-0 px-3 py-1.5 text-sm font-medium text-accent hover:text-accent-hover rounded-lg hover:bg-accent-muted transition-colors"
           >
             Edit
           </button>
         </div>
-        <p className="mt-1 text-xs text-text-secondary opacity-70">
-          Press Enter in chat to send, or click Edit to change
+        <p className="mt-2 text-xs text-text-muted text-center">
+          Press Enter in chat to send your response
         </p>
       </div>
     );
@@ -364,7 +375,7 @@ function AskUserApp() {
 
   // Selection state - tab interface
   return (
-    <div className="p-4 max-w-md mx-auto">
+    <div className="p-4">
       <TabBar
         questions={questions}
         activeTab={state.activeTab}
@@ -392,8 +403,8 @@ function AskUserApp() {
         />
       ) : null}
 
-      <p className="mt-4 text-xs text-text-secondary text-center">
-        Enter to select &middot; Tab/Arrow keys to navigate &middot; Esc to cancel
+      <p className="mt-4 text-xs text-text-muted text-center">
+        Use arrow keys to navigate, Enter to select
       </p>
     </div>
   );

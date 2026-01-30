@@ -6,12 +6,14 @@ interface QuestionHeaderProps {
 export function QuestionHeader({ header, question }: QuestionHeaderProps) {
   return (
     <div className="mb-4">
+      <h2 className="text-lg font-semibold text-text-primary leading-snug tracking-[-0.01em]">
+        {question}
+      </h2>
       {header && (
-        <span className="inline-block px-2 py-1 mb-2 text-xs font-medium rounded-full bg-primary/10 text-primary">
+        <p className="mt-1 text-sm text-text-muted">
           {header}
-        </span>
+        </p>
       )}
-      <h2 className="text-lg font-semibold text-text-primary">{question}</h2>
     </div>
   );
 }

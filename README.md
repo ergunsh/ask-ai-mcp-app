@@ -223,11 +223,21 @@ Which testing frameworks should we include? -> Vitest, Playwright
 
 | Component | Purpose |
 |-----------|---------|
-| `TabBar` | Horizontal tab navigation with checkboxes and Submit tab |
-| `QuestionPanel` | Renders individual question content |
-| `SubmitTab` | Review page showing all answers before submission |
-| `OptionList` / `OptionButton` | Option selection UI |
-| `OtherInput` | Custom text input option |
+| `TabBar` | Pill-style tab navigation with progress indicator |
+| `QuestionPanel` | Renders individual question with refined card styling |
+| `SubmitTab` | Review page showing all answers with staggered animations |
+| `OptionList` / `OptionButton` | Elegant option cards with smooth transitions |
+| `OtherInput` | Custom text input with auto-focus behavior |
+
+### Design System
+
+The UI uses a warm, Claude-native color palette for seamless integration:
+
+- **Surfaces**: Warm cream backgrounds (`#faf8f5`, `#f5f1eb`)
+- **Accent**: Terra cotta (`#c4704b`) for selections and CTAs
+- **Text**: Warm gray hierarchy with subtle undertones
+- **Interactions**: Smooth 150ms transitions, focus rings, hover states
+- **Dark mode**: Full support with warm dark palette
 
 ### Navigation Hooks
 
