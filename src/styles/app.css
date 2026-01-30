@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS custom properties for host theme integration */
+:root {
+  --mcp-primary: #3b82f6;
+  --mcp-primary-hover: #2563eb;
+  --mcp-surface: #ffffff;
+  --mcp-surface-secondary: #f3f4f6;
+  --mcp-text-primary: #111827;
+  --mcp-text-secondary: #6b7280;
+  --mcp-border: #e5e7eb;
+  --mcp-border-focus: #3b82f6;
+}
+
+[data-theme="dark"] {
+  --mcp-primary: #60a5fa;
+  --mcp-primary-hover: #93c5fd;
+  --mcp-surface: #1f2937;
+  --mcp-surface-secondary: #374151;
+  --mcp-text-primary: #f9fafb;
+  --mcp-text-secondary: #9ca3af;
+  --mcp-border: #4b5563;
+  --mcp-border-focus: #60a5fa;
+}
+
+/* Reset for MCP App iframe */
+body {
+  @apply m-0 p-0 font-sans;
+  background-color: var(--mcp-surface);
+  color: var(--mcp-text-primary);
+}
+
+#root {
+  @apply min-h-screen;
+}

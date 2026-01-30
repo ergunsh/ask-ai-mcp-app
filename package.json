@@ -1,0 +1,53 @@
+{
+  "name": "ask-user-mcp-app",
+  "version": "1.0.0",
+  "description": "MCP App that enables AI agents to ask users questions with multiple-choice options",
+  "type": "module",
+  "main": "dist/main.js",
+  "bin": {
+    "ask-user-mcp-app": "./dist/main.js"
+  },
+  "scripts": {
+    "build:server": "tsc -p tsconfig.server.json",
+    "build:ui": "vite build",
+    "build": "npm run build:server && npm run build:ui",
+    "serve": "node dist/main.js",
+    "start": "npm run build && npm run serve",
+    "dev": "tsx main.ts"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-app",
+    "ai",
+    "claude",
+    "chatgpt"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/ext-apps": "^1.0.0",
+    "@modelcontextprotocol/sdk": "^1.24.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.16",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3",
+    "vite-plugin-singlefile": "^2.0.3"
+  },
+  "files": [
+    "dist"
+  ]
+}
